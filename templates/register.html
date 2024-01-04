@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+ 
+ {% block styles %}
+<style type="text/css">
+  .login-form{
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    width: 60%;
+    margin: auto;
+    z-index: 10;
+  }
+</style>
+ {% endblock %}
+
+{% block contents %}
+  <header style="background-color: #dc3545">
+    {% include 'navbar.html' %}
+  </header>
+<section id="login">
+  <div class="rain-container">
+  	<div class="login-form">
+  		<h3>Register</h3>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto content">
+          {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        </div>
+      </div>
+      <a href="/login">Already have account?</a>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  const background = [
+  "{{url_for('static',filename='images/almond.png')}}",
+  "{{url_for('static',filename='images/choco.png')}}",
+  "{{url_for('static',filename='images/hazel.png')}}",
+  "{{url_for('static',filename='images/cashew.png')}}",
+  "{{url_for('static',filename='images/bar.png')}}"
+];
+const rainContainer = document.querySelector(".rain-container");
+
+const amount = 100; // amount of raindops
+let i = 0;
+
+// Looping and creating the raindrop then adding to the rainContainer
+while (i < amount) {
+  //  Creating and Element
+  const drop = document.createElement("img");
+  drop.classList.add("fall");
+  //   CSS Properties for raindrop
+  const raindropProperties = {
+    width: "40px",
+    positionX: Math.floor(Math.random() * window.innerWidth) + "px",
+    delay: Math.random() * -20 + "s",
+    duration: Math.random() * 5 + "s",
+    opacity: Math.random() + 0.2,
+    src:background[Math.floor(Math.random() * background.length)],
+  };
+
+  //   Setting Styles for raindrop
+  drop.src = raindropProperties.src
+  drop.style.width = raindropProperties.width;
+  drop.style.left = raindropProperties.positionX;
+  drop.style.animationDelay = raindropProperties.delay;
+  drop.style.animationDuration = raindropProperties.duration;
+  drop.style.background = raindropProperties.bg;
+  drop.style.opacity = raindropProperties.opacity;
+
+  //   Appending the raindrop in the raindrop container
+  rainContainer.appendChild(drop);
+  i++;
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
+
+{% endblock %}

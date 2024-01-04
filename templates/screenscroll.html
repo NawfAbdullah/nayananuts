@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Screen Scroll</title>
+	<style type="text/css">
+
+			#container {
+			  position: fixed;
+			}
+
+			.animated {
+			    position: absolute;
+			    display: none;
+			    top: 0;
+			    left: 0;
+			}
+	</style>
+</head>
+<body>
+	<div id="container">
+		{% for i in x %}
+    <img src="../static/images/frame{{i}}.jpg" class="animated" width="1000" >
+    	{% endfor %}
+</div>
+<div style="display: block; height: 2000px; width: 100px;"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+    var pictureCount = $('#container img').length;
+    var scrollResolution =200;
+
+    animateHorse();
+    
+    function animateHorse() {
+        var currentScrollPosition = window.pageYOffset;
+        var imageIndex = Math.round(currentScrollPosition / scrollResolution);
+        
+        if (imageIndex >= pictureCount) {
+            imageIndex = pictureCount - 1;
+        }
+        
+        $("#container img").hide();
+        $("#container img").eq(imageIndex).show();
+    }
+    
+    $(window).bind('scroll', function() {
+        animateHorse();
+    });
+});
+</script>
+
+</body>
+</html>

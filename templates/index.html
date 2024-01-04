@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block styles%}
+{{super()}}
+ <script src="https://kit.fontawesome.com/bd05dfcf0f.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block contents %}
+	<header style="background-color: #dc3545">
+		{% include 'navbar.html' %}
+	</header>
+	<section id="cover">
+		<div class="rain-container">
+		<div class="product-showcase">
+			<img id ="almonds" src="{{url_for('static',filename='images/almonds.png')}}">
+			<img id ='sac' src="{{url_for('static',filename='images/sac.png')}}" >
+			<img id ='choco' src="{{url_for('static',filename='images/choco.png')}}" >
+			<img id ='chocolate' src="{{url_for('static',filename='images/chocolate.png')}}" >
+			<img id = 'nut' src="{{url_for('static',filename='images/nuts.png')}}">
+		</div>
+		<h1>Ready for a nutty chocolate rain?</h1>
+		<div class="btn-holder">
+			<a href="/shop" class="btn btn-outline-light btn-lg"><i class="fas fa-shopping-basket"></i> Shop</a>
+			<a href="#about" class="btn btn-dark btn-lg" style="margin-left: 15px"><i class="fas fa-store-alt"></i> About</a>
+		</div>
+		</div>
+	</section>
+	<section id=about>
+		<h2>About us</h2>
+
+		<img class = 'shop-img' src="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
+		<p>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+	</section>
+	<section id="foundby">
+		<h2>Nawf Abdullah</h2>
+		<img class="myself" src="{{url_for('static',filename='images/nawf.jpg')}}">
+		<p><strong>This website is created by Nawf Abdullah</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</section>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		$('img').fadeIn(3000);
+		$('#chocolate').animate({opacity:'0.5'}).animate({
+			top:'0px',
+			right: '+=150px',
+    		opacity: '1',
+    		width: '+=650px'});
+		console.log('Done');
+		const rainContainer = document.querySelector(".rain-container");
+
+// background Colors for the raindrop
+const background = [
+  "{{url_for('static',filename='images/almond.png')}}",
+  "{{url_for('static',filename='images/choco.png')}}",
+  "{{url_for('static',filename='images/hazel.png')}}",
+  "{{url_for('static',filename='images/cashew.png')}}",
+  "{{url_for('static',filename='images/bar.png')}}"
+];
+
+const amount = 100; // amount of raindops
+let i = 0;
+
+// Looping and creating the raindrop then adding to the rainContainer
+while (i < amount) {
+  //  Creating and Element
+  const drop = document.createElement("img");
+  drop.classList.add("fall");
+  //   CSS Properties for raindrop
+  const raindropProperties = {
+    width: "40px",
+    positionX: Math.floor(Math.random() * window.innerWidth) + "px",
+    delay: Math.random() * -20 + "s",
+    duration: Math.random() * 5 + "s",
+    opacity: Math.random() + 0.2,
+    src:background[Math.floor(Math.random() * background.length)],
+  };
+
+  //   Setting Styles for raindrop
+  drop.src = raindropProperties.src
+  drop.style.width = raindropProperties.width;
+  drop.style.left = raindropProperties.positionX;
+  drop.style.animationDelay = raindropProperties.delay;
+  drop.style.animationDuration = raindropProperties.duration;
+  drop.style.background = raindropProperties.bg;
+  drop.style.opacity = raindropProperties.opacity;
+
+  //   Appending the raindrop in the raindrop container
+  rainContainer.appendChild(drop);
+  i++;
+}
+function check_if_in_view(query,class_) {
+  var window_height = $(window).height();
+  var window_top_position = $(window).scrollTop();
+  var window_bottom_position = (window_top_position + window_height);
+
+  $.each($(query), function() {
+    var $element = $(this);
+    var element_height = $element.outerHeight();
+    var element_top_position = $element.offset().top;
+    var element_bottom_position = (element_top_position + element_height);
+
+    //check to see if this current container is within viewport
+    if ((element_bottom_position >= window_top_position) &&
+        (element_top_position <= window_bottom_position)) {
+      $element.addClass(class_);
+    } else {
+      $element.removeClass(class_);
+    }
+  });
+}
+
+$(window).on('scroll',
+function () {
+ check_if_in_view('#about','in-view')
+ } );
+$(window).on('scroll',
+function () {
+ check_if_in_view('#foundby','out-view')
+ } );
+
+
+
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'admin.html' %}
+{% block contents %}
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                        {% include 'type-cards.html' %}
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Product vs Cost
+                                    </div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Product and Quantity
+                                    </div>
+                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Product Details
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Cost</th>
+                                            <th>Stock</th>
+                                            <th>Description</th>
+                                            <th>Image</th>
+                                            <th>  </th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Order Number</th>
+                                            <th>Cost</th>
+                                            <th>Paid</th>
+                                            <th>Delivered</th>
+                                            <th>Update</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {% for product in products %}
+                                        <tr>
+                                            <td>{{product.product_name}}</td>
+                                            <td>{{product.cost}}</td>
+                                            <td>{{product.stock}}</td>
+                                            <td>{{product.description}}</td>
+                                            <td><img src="{{product.img_url}}" width="100"></td>
+                                            <td><a class="btn btn-warning" href="/edit/{{product.id}}">Edit</a><a class="btn btn-outline-danger" href="/delete/{{product.id}}">Delete</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+             
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename = 'scripts/admin-scripts.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename = 'scripts/chart-area-demo.js')}}"></script>
+        <script type="text/javascript">
+            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            
+Chart.defaults.global.defaultFontColor = '#292b2c';
+
+// Bar Chart Example
+
+
+fetch('/stock-count').then(function (data) {
+    return data.json();
+    }).then(function (text) {
+        console.log('GET response:');
+        var data2323 = text; 
+        var ctx = document.getElementById("myBarChart");
+var myLineChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels:data2323.name,
+    datasets: [{
+      label: "Instock",
+      backgroundColor: "rgba(2,117,216,1)",
+      borderColor: "rgba(2,117,216,1)",
+      data: data2323.stock,
+    }],
+  },
+  options: {
+    scales: {
+      xAxes: [{
+        time: {
+          unit: 'month'
+        },
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          maxTicksLimit: 6
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          min: 0,
+          max: 2500,
+          maxTicksLimit: 5
+        },
+        gridLines: {
+          display: true
+        }
+      }],
+    },
+    legend: {
+      display: false
+    }
+  }
+});
+    });
+    
+ 
+
+console.log(data2323)
+
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename='scripts/datatables-simple-demo.js')}}"></script>
+{% endblock %}

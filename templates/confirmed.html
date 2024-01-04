@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+ {% block styles %}
+<style type="text/css">
+	body{
+		background-color: #dc3545;
+	}
+  .content{
+    position: absolute;
+    top: 60px;
+    left: 20%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    width: 60%;
+    margin: auto;
+    z-index: 10;
+  }
+
+  footer{
+  	position: relative;
+  	top:100px;
+  }
+</style>
+ {% endblock %}
+
+{% block contents %}
+ <header style="background-color: #dc3545">
+    {% include 'navbar.html' %}
+  </header>
+<section id="login">
+  <div class="rain-container">
+	<div class="content">
+		<img src="{{url_for('static',filename='images/tick.gif')}}" width="100">
+		<h3>Your Order is Placed</h3>
+		<img style="margin: 5%" src="{{url_for('static',filename='images/success.png')}}">
+		 <a href="/shop">Keep Shoping</a>
+		<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+	</div>
+    </div>
+</section>
+<script type="text/javascript">
+  const background = [
+  "{{url_for('static',filename='images/almond.png')}}",
+  "{{url_for('static',filename='images/choco.png')}}",
+  "{{url_for('static',filename='images/hazel.png')}}",
+  "{{url_for('static',filename='images/cashew.png')}}",
+  "{{url_for('static',filename='images/bar.png')}}"
+];
+const rainContainer = document.querySelector(".rain-container");
+
+const amount = 100; // amount of raindops
+let i = 0;
+
+// Looping and creating the raindrop then adding to the rainContainer
+while (i < amount) {
+  //  Creating and Element
+  const drop = document.createElement("img");
+  drop.classList.add("fall");
+  //   CSS Properties for raindrop
+  const raindropProperties = {
+    width: "40px",
+    positionX: Math.floor(Math.random() * window.innerWidth) + "px",
+    delay: Math.random() * -20 + "s",
+    duration: Math.random() * 5 + "s",
+    opacity: Math.random() + 0.2,
+    src:background[Math.floor(Math.random() * background.length)],
+  };
+
+  //   Setting Styles for raindrop
+  drop.src = raindropProperties.src
+  drop.style.width = raindropProperties.width;
+  drop.style.left = raindropProperties.positionX;
+  drop.style.animationDelay = raindropProperties.delay;
+  drop.style.animationDuration = raindropProperties.duration;
+  drop.style.background = raindropProperties.bg;
+  drop.style.opacity = raindropProperties.opacity;
+
+  //   Appending the raindrop in the raindrop container
+  rainContainer.appendChild(drop);
+  i++;
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
+
+{% endblock %}

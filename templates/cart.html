@@ -1,0 +1,31 @@
+{% extends 'header.html' %}
+{% block content %}
+	<form action="/order_change" method="POST">
+	<div class="" style="margin:20px">
+		{% for n,item in enumerate(items) %}
+		<div class="card mb-3" style="max-width: 540px;margin-bottom: 20px">
+		  <div class="row g-0">
+		    <div class="col-md-4">
+		      <img src="{{item.img_url}}" class="img-fluid rounded-start" alt="...">
+		    </div>
+		    <div class="col-md-8">
+		      <div class="card-body">
+		        <h5 class="card-title">{{item.product_name}}</h5>
+		        <p class="card-text">{{count[n]}}</p>
+		        <p class="card-text">
+		        	
+		        	{% include 'qtybtn.html' %}
+						</p>
+		        	<p class="card-text"></p>
+		        <p class="card-text"><small class="text-muted"></small></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		{% endfor %}
+	</div>
+	<button type="submit" class="xero btn btn-lg btn-outline-dark">Update</button>
+	<a class="btn btn-lg btn-warning" href="/buy-more"> Buy </a>
+</form>
+
+{% endblock %}
